@@ -67,7 +67,7 @@ export class GuestDashboardComponent implements OnInit {
   }
 
   async loadRSVP() {
-    const guestId = this.authService.currentUser()?.id;
+    const guestId = this.authService.currentGuest()?.id;
     if (!guestId) return;
 
     try {
@@ -90,7 +90,7 @@ export class GuestDashboardComponent implements OnInit {
   async onSubmitRSVP() {
     if (this.rsvpForm.invalid) return;
 
-    const guestId = this.authService.currentUser()?.id;
+    const guestId = this.authService.currentGuest()?.id;
     if (!guestId) return;
 
     this.loading.set(true);
