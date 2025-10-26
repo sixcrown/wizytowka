@@ -1,5 +1,5 @@
 {
-  "name": "wizytowka-slub",
+  "name": "wizytowka",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:wizytowka-slub": "node dist/wizytowka-slub/server/server.mjs"
+    "serve:ssr:wizytowka": "node dist/wizytowka-slub/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
