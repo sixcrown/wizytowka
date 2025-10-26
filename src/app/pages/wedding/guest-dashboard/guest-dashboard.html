@@ -1,0 +1,110 @@
+<div class="dashboard-container">
+  <mat-toolbar color="primary">
+    <span>Zaproszenie na Ślub</span>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+      Strona Główna
+    </a>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Wyloguj
+    </button>
+  </mat-toolbar>
+
+  <div class="content">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>Witaj, {{ authService.currentGuest()?.full_name || 'Gościu' }}!</mat-card-title>
+        <mat-card-subtitle>
+          Cieszymy się, że możesz dołączyć do naszej uroczystości
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>RSVP - Potwierdzenie Obecności</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="rsvpForm" (ngSubmit)="onSubmitRSVP()">
+          <mat-radio-group formControlName="attending" class="radio-group">
+            <mat-radio-button [value]="true">Tak, będę</mat-radio-button>
+            <mat-radio-button [value]="false">Niestety nie mogę</mat-radio-button>
+          </mat-radio-group>
+
+          @if (rsvpForm.value.attending) {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Liczba gości</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="guestsCount"
+              min="1"
+              [disabled]="loading()"
+            />
+          </mat-form-field>
+
+          <mat-checkbox formControlName="needsAccommodation" [disabled]="loading()">
+            Potrzebuję noclegu
+          </mat-checkbox>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Wymagania dietetyczne</mat-label>
+            <textarea
+              matInput
+              formControlName="dietaryRestrictions"
+              rows="2"
+              placeholder="np. wegetariańska, bezglutenowa"
+              [disabled]="loading()"
+            ></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Wiadomość dla Pary Młodej</mat-label>
+            <textarea
+              matInput
+              formControlName="message"
+              rows="3"
+              placeholder="Twoje życzenia..."
+              [disabled]="loading()"
+            ></textarea>
+          </mat-form-field>
+          }
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="rsvpForm.invalid || loading()"
+            class="submit-button"
+          >
+            {{ rsvpSubmitted() ? 'Zaktualizuj odpowiedź' : 'Wyślij odpowiedź' }}
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Najczęściej zadawane pytania (FAQ)</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (faqs().length === 0) {
+        <p>Brak pytań w tej chwili. Sprawdź później!</p>
+        } @else {
+        <mat-accordion>
+          @for (faq of faqs(); track faq.id) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ faq.question }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{ faq.answer }}</p>
+          </mat-expansion-panel>
+          }
+        </mat-accordion>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

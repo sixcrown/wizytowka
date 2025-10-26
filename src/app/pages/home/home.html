@@ -1,0 +1,84 @@
+<div class="home-container">
+  <mat-toolbar color="primary">
+    <span>Twoje Imię Nazwisko</span>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/slub">
+      <mat-icon>celebration</mat-icon>
+      Zaproszenie na Ślub
+    </a>
+  </mat-toolbar>
+
+  <div class="content">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>O Mnie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Cześć! Jestem <strong>Full Stack Developerem</strong> z pasją do tworzenia
+          nowoczesnych aplikacji webowych.
+        </p>
+        <p>Specjalizuję się w technologiach frontendowych i backendowych.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Umiejętności</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-set>
+          @for (skill of skills; track skill) {
+          <mat-chip>{{ skill }}</mat-chip>
+          }
+        </mat-chip-set>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Doświadczenie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (job of experience; track job.title) {
+        <div class="experience-item">
+          <h3>{{ job.title }}</h3>
+          <h4>{{ job.company }} - {{ job.period }}</h4>
+          <p>{{ job.description }}</p>
+        </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Kontakt</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="contact-links">
+          <a mat-raised-button color="primary" href="mailto:twoj@email.com">
+            <mat-icon>email</mat-icon>
+            Email
+          </a>
+          <a
+            mat-raised-button
+            color="accent"
+            href="https://github.com/username"
+            target="_blank"
+          >
+            <mat-icon>code</mat-icon>
+            GitHub
+          </a>
+          <a
+            mat-raised-button
+            href="https://linkedin.com/in/username"
+            target="_blank"
+          >
+            <mat-icon>work</mat-icon>
+            LinkedIn
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

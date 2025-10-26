@@ -1,0 +1,74 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+
+  mat-toolbar {
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    a,
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .welcome-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+
+      mat-card-header {
+        mat-card-title,
+        mat-card-subtitle {
+          color: white;
+        }
+      }
+    }
+
+    mat-card {
+      mat-card-content {
+        padding-top: 16px;
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 8px;
+          }
+
+          .full-width {
+            width: 100%;
+          }
+
+          mat-checkbox {
+            margin: 12px 0;
+          }
+
+          .submit-button {
+            align-self: flex-start;
+            margin-top: 8px;
+          }
+        }
+
+        mat-accordion {
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  mat-toolbar {
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    a {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    mat-card {
+      mat-card-header {
+        mat-card-title {
+          font-size: 24px;
+          font-weight: 500;
+        }
+      }
+
+      mat-card-content {
+        padding-top: 16px;
+
+        p {
+          margin-bottom: 12px;
+          line-height: 1.6;
+        }
+
+        mat-chip-set {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .experience-item {
+          margin-bottom: 24px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          h3 {
+            margin: 0 0 4px 0;
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+          h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.6);
+            font-weight: normal;
+          }
+
+          p {
+            margin: 0;
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+
+        .contact-links {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+
+          a {
+            mat-icon {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
