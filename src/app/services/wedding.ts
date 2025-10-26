@@ -41,6 +41,8 @@ export class WeddingService {
       .upsert({
         ...rsvp,
         updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'guest_id'
       })
       .select()
       .single();
