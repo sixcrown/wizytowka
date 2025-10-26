@@ -27,7 +27,7 @@ export class AuthService {
     this.supabase.auth.getSession().then(({ data: { session } }) => {
       this.currentUser.set(session?.user ?? null);
       if (session?.user) {
-        this.loadGuestData(session.user.id);
+        this.loadGuestDataFromUser(session.user);
       }
     });
 
@@ -35,7 +35,7 @@ export class AuthService {
     this.supabase.auth.onAuthStateChange((_event, session) => {
       this.currentUser.set(session?.user ?? null);
       if (session?.user) {
-        this.loadGuestData(session.user.id);
+        this.loadGuestDataFromUser(session.user);
       } else {
         this.currentGuest.set(null);
       }
@@ -101,19 +101,46 @@ export class AuthService {
 
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
-    if (error) throw error;
+    // Ignore session missing errors - user is already logged out
+    if (error && error.message !== 'Auth session missing!') {
+      throw error;
+    }
+    this.currentUser.set(null);
     this.currentGuest.set(null);
   }
 
-  private async loadGuestData(userId: string) {
+  private async loadGuestData(guestId: string) {
     const { data, error } = await this.supabase
       .from('guests')
       .select('*')
-      .eq('id', userId)
+      .eq('id', guestId)
       .single();
 
     if (!error && data) {
       this.currentGuest.set(data as Guest);
+    }
+  }
+
+  private async loadGuestDataFromUser(user: User) {
+    // Try to get guest_id from user metadata first
+    const guestId = user.user_metadata?.['guest_id'];
+
+    if (guestId) {
+      await this.loadGuestData(guestId);
+      return;
+    }
+
+    // Fallback: find guest by email
+    if (user.email) {
+      const { data, error } = await this.supabase
+        .from('guests')
+        .select('*')
+        .eq('email', user.email)
+        .single();
+
+      if (!error && data) {
+        this.currentGuest.set(data as Guest);
+      }
     }
   }
 
