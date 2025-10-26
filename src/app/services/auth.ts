@@ -53,19 +53,50 @@ export class AuthService {
   }
 
   async signInWithInviteCode(inviteCode: string) {
-    // This is a simplified version - you'll need to implement
-    // your own invite code logic in Supabase
-    const { data, error } = await this.supabase
+    // Sprawdź czy kod zaproszenia istnieje
+    const { data: guest, error: guestError } = await this.supabase
       .from('guests')
       .select('*')
       .eq('invite_code', inviteCode)
       .single();
 
-    if (error) throw error;
+    if (guestError) throw new Error('Nieprawidłowy kod zaproszenia');
 
-    // Here you would create a session or sign in the user
-    // This is a placeholder - implement based on your needs
-    return data;
+    // Spróbuj zalogować używając email + invite_code jako hasła
+    const { data: signInData, error: signInError } = await this.supabase.auth.signInWithPassword({
+      email: guest.email,
+      password: inviteCode,
+    });
+
+    // Jeśli logowanie nie powiodło się, utwórz nowe konto
+    if (signInError) {
+      const { data: signUpData, error: signUpError } = await this.supabase.auth.signUp({
+        email: guest.email,
+        password: inviteCode,
+        options: {
+          data: {
+            full_name: guest.full_name,
+            guest_id: guest.id,
+          },
+        },
+      });
+
+      if (signUpError) throw signUpError;
+
+      // Po utworzeniu konta, od razu zaloguj
+      if (signUpData.user) {
+        await this.loadGuestData(guest.id);
+        return signUpData;
+      }
+    }
+
+    // Jeśli logowanie się powiodło
+    if (signInData.user) {
+      await this.loadGuestData(guest.id);
+      return signInData;
+    }
+
+    throw new Error('Nie udało się zalogować');
   }
 
   async signOut() {
