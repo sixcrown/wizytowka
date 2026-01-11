@@ -94,4 +94,16 @@ export class HomeComponent {
     university: 'Silesian University of Technology',
     period: '2016-2021'
   };
+
+  getSkillIcon(category: string): string {
+    const icons: Record<string, string> = {
+      'Frontend': 'web',
+      'Backend': 'dns',
+      'Databases': 'storage',
+      'Infrastructure & DevOps': 'cloud',
+      'Testing': 'bug_report',
+      'Tools & Methodology': 'build'
+    };
+    return icons[category] || 'code';
+  }
 }

@@ -1,60 +1,89 @@
-<div class="home-container">
-  <mat-toolbar color="primary">
-    <span>{{ name }}</span>
-    <span class="spacer"></span>
-    <a mat-button routerLink="/slub">
-      <mat-icon>celebration</mat-icon>
-      Zaproszenie na Ślub
-    </a>
-  </mat-toolbar>
-
-  <div class="content">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ name }}</mat-card-title>
-        <mat-card-subtitle>{{ title }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>{{ about }}</p>
-        <div class="contact-info">
-          <p><mat-icon>location_on</mat-icon> {{ location }}</p>
-          <p><mat-icon>phone</mat-icon> {{ phone }}</p>
-          <p><mat-icon>email</mat-icon> {{ email }}</p>
+<div class="portfolio">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="greeting">Cześć, jestem</span>
+        <h1 class="name">{{ name }}</h1>
+        <h2 class="title">{{ title }}</h2>
+        <p class="tagline">{{ about }}</p>
+        <div class="hero-cta">
+          <a mat-flat-button color="primary" [href]="'mailto:' + email">
+            <mat-icon>mail</mat-icon>
+            Napisz do mnie
+          </a>
+          <a mat-stroked-button [href]="linkedin" target="_blank">
+            <mat-icon>open_in_new</mat-icon>
+            LinkedIn
+          </a>
         </div>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Skills</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        @for (group of skillGroups; track group.category) {
-        <div class="skill-group">
-          <h3 class="skill-category">{{ group.category }}</h3>
-          <mat-chip-set>
-            @for (skill of group.skills; track skill) {
-            <mat-chip>{{ skill }}</mat-chip>
-            }
-          </mat-chip-set>
+      </div>
+      <div class="hero-info">
+        <div class="info-item">
+          <mat-icon>location_on</mat-icon>
+          <span>{{ location }}</span>
         </div>
-        }
-      </mat-card-content>
-    </mat-card>
+        <div class="info-item">
+          <mat-icon>phone</mat-icon>
+          <span>{{ phone }}</span>
+        </div>
+        <div class="info-item">
+          <mat-icon>email</mat-icon>
+          <span>{{ email }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <mat-icon>expand_more</mat-icon>
+    </div>
+  </section>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Work Experience</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        @for (job of experience; track job.title) {
-        <div class="experience-item">
-          <h3>{{ job.title }}</h3>
-          <h4>{{ job.company }} - {{ job.period }}</h4>
+  <!-- Skills Section -->
+  <section class="skills-section">
+    <div class="section-header">
+      <h2>Umiejętności</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="skills-grid">
+      @for (group of skillGroups; track group.category) {
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <mat-icon>{{ getSkillIcon(group.category) }}</mat-icon>
+          <h3>{{ group.category }}</h3>
+        </div>
+        <div class="skill-chips">
+          @for (skill of group.skills; track skill) {
+          <span class="skill-chip">{{ skill }}</span>
+          }
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="experience-section">
+    <div class="section-header light">
+      <h2>Doświadczenie</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="timeline">
+      @for (job of experience; track job.title; let i = $index) {
+      <div class="timeline-item" [class.right]="i % 2 === 1">
+        <div class="timeline-marker">
+          <mat-icon>work</mat-icon>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <h3>{{ job.title }}</h3>
+            <span class="company">{{ job.company }}</span>
+            <span class="period">{{ job.period }}</span>
+          </div>
           <p>{{ job.description }}</p>
           @if (job.projects.length > 0) {
           <div class="projects">
-            <strong>Key Projects:</strong>
+            <strong>Kluczowe projekty:</strong>
             <ul>
               @for (project of job.projects; track project) {
               <li>{{ project }}</li>
@@ -63,52 +92,60 @@
           </div>
           }
         </div>
-        }
-      </mat-card-content>
-    </mat-card>
+      </div>
+      }
+    </div>
+  </section>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Education</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="education-item">
-          <h3>{{ education.degree }}</h3>
-          <h4>{{ education.field }}</h4>
-          <p>{{ education.university }}</p>
-          <p class="period">{{ education.period }}</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <!-- Education Section -->
+  <section class="education-section">
+    <div class="section-header">
+      <h2>Wykształcenie</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="education-card">
+      <div class="education-icon">
+        <mat-icon>school</mat-icon>
+      </div>
+      <div class="education-details">
+        <h3>{{ education.degree }}</h3>
+        <h4>{{ education.field }}</h4>
+        <p>{{ education.university }}</p>
+        <span class="period">{{ education.period }}</span>
+      </div>
+    </div>
+  </section>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Contact</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="contact-links">
-          <a mat-raised-button color="primary" [href]="'mailto:' + email">
-            <mat-icon>email</mat-icon>
-            Email
-          </a>
-          <a
-            mat-raised-button
-            color="accent"
-            [href]="linkedin"
-            target="_blank"
-          >
-            <mat-icon>work</mat-icon>
-            LinkedIn
-          </a>
-          <a
-            mat-raised-button
-            [href]="'tel:' + phone"
-          >
-            <mat-icon>phone</mat-icon>
-            Call
-          </a>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="section-header light">
+      <h2>Kontakt</h2>
+      <div class="header-line"></div>
+    </div>
+    <div class="contact-content">
+      <p class="contact-intro">Chętnie porozmawiam o nowych projektach i możliwościach współpracy.</p>
+      <div class="contact-buttons">
+        <a mat-flat-button color="primary" [href]="'mailto:' + email">
+          <mat-icon>email</mat-icon>
+          {{ email }}
+        </a>
+        <a mat-flat-button color="accent" [href]="'tel:' + phone">
+          <mat-icon>phone</mat-icon>
+          {{ phone }}
+        </a>
+        <a mat-stroked-button [href]="linkedin" target="_blank">
+          <mat-icon>open_in_new</mat-icon>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a mat-button routerLink="/slub" class="wedding-link">
+      <mat-icon>celebration</mat-icon>
+      Zaproszenie na Ślub
+    </a>
+  </footer>
 </div>
