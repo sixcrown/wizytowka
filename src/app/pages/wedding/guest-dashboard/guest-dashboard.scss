@@ -56,6 +56,30 @@ $font-sans: 'Lato', 'Segoe UI', sans-serif;
       color: $gold;
     }
   }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .gallery-link {
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    color: $gold;
+
+    &:hover {
+      background: rgba($gold, 0.2);
+    }
+
+    span {
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+  }
 }
 
 // Hero Section
@@ -769,6 +793,67 @@ section {
 
     mat-icon {
       color: $sage;
+    }
+  }
+}
+
+// Gallery Promo Section
+.gallery-promo-section {
+  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 8%) 100%);
+
+  .gallery-promo {
+    text-align: center;
+    padding: 2rem 0;
+
+    .gallery-promo-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba($gold, 0.15);
+      border: 2px solid rgba($gold, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+
+      mat-icon {
+        font-size: 36px;
+        width: 36px;
+        height: 36px;
+        color: $gold;
+      }
+    }
+
+    h2 {
+      color: $ivory;
+      margin-bottom: 1rem;
+
+      &::after {
+        background: $gold;
+      }
+    }
+
+    .gallery-promo-text {
+      color: rgba($ivory, 0.8);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-promo-btn {
+      background: $gold !important;
+      color: $charcoal !important;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background: lighten($gold, 5%) !important;
+      }
     }
   }
 }

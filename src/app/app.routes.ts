@@ -11,6 +11,13 @@ export const routes: Routes = [
       import('./pages/wedding/wedding').then((m) => m.WeddingComponent),
   },
   {
+    path: 'slub/galeria',
+    loadComponent: () =>
+      import('./pages/wedding/photo-gallery/photo-gallery').then(
+        (m) => m.PhotoGalleryComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

@@ -1,0 +1,140 @@
+@if (isAuthenticated()) {
+<div class="photo-gallery-page">
+  <!-- Header -->
+  <header class="gallery-header">
+    <a routerLink="/slub" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <h1>Galeria Zdjęć</h1>
+    <span class="header-spacer"></span>
+  </header>
+
+  <main class="gallery-content">
+    <!-- Upload Area -->
+    <div
+      class="upload-area"
+      [class.dragging]="isDragging()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      (click)="fileInput.click()"
+    >
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        (change)="onFileSelected($event)"
+      />
+      <div class="upload-icon">
+        <mat-icon>cloud_upload</mat-icon>
+      </div>
+      <p class="upload-text">Przeciągnij zdjęcia tutaj lub kliknij aby wybrać</p>
+      <p class="upload-hint">JPG, PNG, WEBP - maksymalnie 10MB na zdjęcie</p>
+    </div>
+
+    <!-- Upload Progress -->
+    @if (uploadingPhotos().length > 0) {
+    <div class="upload-progress">
+      @for (upload of uploadingPhotos(); track upload.name) {
+      <div class="upload-item">
+        <mat-icon>image</mat-icon>
+        <span class="upload-name">{{ upload.name }}</span>
+        <mat-spinner diameter="20"></mat-spinner>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Loading State -->
+    @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Ładowanie zdjęć...</p>
+    </div>
+    } @else {
+
+    <!-- Moje zdjęcia -->
+    <section class="photo-section">
+      <div class="section-header">
+        <mat-icon>person</mat-icon>
+        <h2>Moje zdjęcia</h2>
+        <span class="photo-count">({{ myPhotos().length }})</span>
+      </div>
+
+      @if (myPhotos().length > 0) {
+      <div class="photo-grid">
+        @for (photo of myPhotos(); track photo.id) {
+        <div class="photo-card" (click)="openLightbox(photo)">
+          <img [src]="photo.url" [alt]="photo.file_name" loading="lazy" />
+          <div class="photo-overlay">
+            <button class="delete-btn" (click)="deletePhoto(photo, $event)" title="Usuń zdjęcie">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="no-photos-hint">Nie dodałeś jeszcze żadnych zdjęć. Użyj pola powyżej!</p>
+      }
+    </section>
+
+    <!-- Zdjęcia od innych gości -->
+    <section class="photo-section">
+      <div class="section-header">
+        <mat-icon>groups</mat-icon>
+        <h2>Zdjęcia od gości</h2>
+        <span class="photo-count">({{ otherPhotos().length }})</span>
+      </div>
+
+      @if (otherPhotos().length > 0) {
+      <div class="photo-grid">
+        @for (photo of otherPhotos(); track photo.id) {
+        <div class="photo-card" (click)="openLightbox(photo)">
+          <img [src]="photo.url" [alt]="photo.file_name" loading="lazy" />
+          <div class="photo-overlay">
+            <span class="photo-author">{{ photo.guest_name || 'Gość' }}</span>
+          </div>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="no-photos-hint">Inni goście jeszcze nie dodali zdjęć.</p>
+      }
+    </section>
+
+    }
+  </main>
+
+  <!-- Lightbox -->
+  @if (lightboxPhoto()) {
+  <div class="lightbox" (click)="closeLightbox()">
+    <button class="lightbox-close" (click)="closeLightbox()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <button class="lightbox-nav prev" (click)="navigateLightbox('prev', $event)">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <img [src]="lightboxPhoto()?.url" [alt]="lightboxPhoto()?.file_name" />
+      <div class="lightbox-info">
+        <span class="lightbox-author">{{ lightboxPhoto()?.guest_name || 'Gość' }}</span>
+        @if (lightboxPhoto()?.caption) {
+        <p class="lightbox-caption">{{ lightboxPhoto()?.caption }}</p>
+        }
+      </div>
+    </div>
+
+    <button class="lightbox-nav next" (click)="navigateLightbox('next', $event)">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  }
+</div>
+} @else {
+<app-login />
+}

@@ -43,6 +43,19 @@ export interface TableAssignment {
   guest_name: string | null;
 }
 
+export interface WeddingPhoto {
+  id: string;
+  guest_id: string | null;
+  file_path: string;
+  file_name: string;
+  file_size: number;
+  mime_type: string;
+  caption?: string;
+  uploaded_at: string;
+  guest_name?: string;
+  url?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -136,5 +149,86 @@ export class WeddingService {
     if (error && error.code !== 'PGRST116') throw error;
     // wedding_tables returns as object when using foreign key relation with .single()
     return (data?.wedding_tables as unknown as WeddingTable) ?? null;
+  }
+
+  // Photo Methods
+  async uploadPhoto(file: File, guestId: string, caption?: string): Promise<WeddingPhoto> {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${guestId}/${Date.now()}.${fileExt}`;
+
+    // Upload file to storage
+    const { error: uploadError } = await this.supabase.storage
+      .from('wedding-photos')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (uploadError) throw uploadError;
+
+    // Save metadata to database
+    const { data, error: dbError } = await this.supabase
+      .from('wedding_photos')
+      .insert({
+        guest_id: guestId,
+        file_path: fileName,
+        file_name: file.name,
+        file_size: file.size,
+        mime_type: file.type,
+        caption,
+      })
+      .select()
+      .single();
+
+    if (dbError) throw dbError;
+    return data as WeddingPhoto;
+  }
+
+  async getPhotos(): Promise<WeddingPhoto[]> {
+    const { data, error } = await this.supabase
+      .from('wedding_photos')
+      .select('*, guests(full_name)')
+      .order('uploaded_at', { ascending: false });
+
+    if (error) throw error;
+
+    // Get public URLs for all photos
+    const photosWithUrls = (data || []).map((photo: any) => {
+      const { data: urlData } = this.supabase.storage
+        .from('wedding-photos')
+        .getPublicUrl(photo.file_path);
+
+      return {
+        ...photo,
+        guest_name: photo.guests?.full_name,
+        url: urlData.publicUrl,
+      } as WeddingPhoto;
+    });
+
+    return photosWithUrls;
+  }
+
+  async deletePhoto(photoId: string, filePath: string): Promise<void> {
+    // Delete from storage
+    const { error: storageError } = await this.supabase.storage
+      .from('wedding-photos')
+      .remove([filePath]);
+
+    if (storageError) throw storageError;
+
+    // Delete from database
+    const { error: dbError } = await this.supabase
+      .from('wedding_photos')
+      .delete()
+      .eq('id', photoId);
+
+    if (dbError) throw dbError;
+  }
+
+  getPhotoUrl(filePath: string): string {
+    const { data } = this.supabase.storage
+      .from('wedding-photos')
+      .getPublicUrl(filePath);
+    return data.publicUrl;
   }
 }

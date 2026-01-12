@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth';
-import { WeddingService, RSVPResponse, FAQItem, WeddingTable } from '../../../services/wedding';
+import { WeddingService, RSVPResponse, FAQItem, WeddingTable, WeddingPhoto } from '../../../services/wedding';
 
 interface CountdownTime {
   days: number;
