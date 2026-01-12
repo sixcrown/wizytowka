@@ -1,53 +1,273 @@
-<div class="dashboard-container">
-  <mat-toolbar color="primary">
-    <span>Zaproszenie na Ślub</span>
-    <span class="spacer"></span>
-    <a mat-button routerLink="/">
+<div class="wedding-invitation">
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <a routerLink="/" class="nav-link">
       <mat-icon>home</mat-icon>
-      Strona Główna
     </a>
-    <button mat-button (click)="logout()">
+    <span class="nav-title">B & M</span>
+    <button class="nav-link" (click)="logout()">
       <mat-icon>logout</mat-icon>
-      Wyloguj
     </button>
-  </mat-toolbar>
+  </nav>
 
-  <div class="content">
-    <mat-card class="welcome-card">
-      <mat-card-header>
-        <mat-card-title>Witaj, {{ authService.currentGuest()?.full_name || 'Gościu' }}!</mat-card-title>
-        <mat-card-subtitle>
-          Cieszymy się, że możesz dołączyć do naszej uroczystości
-        </mat-card-subtitle>
-      </mat-card-header>
-    </mat-card>
+  <!-- Hero Section with Countdown -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="save-the-date">Save the Date</span>
+      <h1 class="couple-names">Bartosz & Mara</h1>
+      <p class="wedding-date">2 Sierpnia 2026</p>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>RSVP - Potwierdzenie Obecności</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="rsvpForm" (ngSubmit)="onSubmitRSVP()">
-          <mat-radio-group formControlName="attending" class="radio-group">
-            <mat-radio-button [value]="true">Tak, będę</mat-radio-button>
-            <mat-radio-button [value]="false">Niestety nie mogę</mat-radio-button>
-          </mat-radio-group>
+      <div class="countdown">
+        <div class="countdown-item">
+          <span class="countdown-value">{{ countdown().days }}</span>
+          <span class="countdown-label">dni</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span class="countdown-value">{{ countdown().hours }}</span>
+          <span class="countdown-label">godzin</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span class="countdown-value">{{ countdown().minutes }}</span>
+          <span class="countdown-label">minut</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span class="countdown-value">{{ countdown().seconds }}</span>
+          <span class="countdown-label">sekund</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <mat-icon>expand_more</mat-icon>
+    </div>
+  </section>
 
-          @if (rsvpForm.value.attending) {
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Liczba gości</mat-label>
-            <input
-              matInput
-              type="number"
-              formControlName="guestsCount"
-              min="1"
-              [disabled]="loading()"
-            />
-          </mat-form-field>
+  <!-- Welcome Section -->
+  <section class="welcome-section">
+    <div class="section-content">
+      <div class="ornament">&#10053;</div>
+      <h2>Drogi Gościu</h2>
+      <p class="welcome-name">{{ authService.currentGuest()?.full_name || 'Gościu' }}</p>
+      <p class="welcome-text">
+        Z wielką radością zapraszamy Cię na uroczystość zaślubin.<br />
+        Twoja obecność będzie dla nas najpiękniejszym prezentem.
+      </p>
+      <div class="ornament">&#10053;</div>
+    </div>
+  </section>
 
-          <mat-checkbox formControlName="needsAccommodation" [disabled]="loading()">
-            Potrzebuję noclegu
-          </mat-checkbox>
+  <!-- Timeline Section -->
+  <section class="timeline-section">
+    <div class="section-content">
+      <h2>Harmonogram Dnia</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <mat-icon>favorite</mat-icon>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-time">15:00</span>
+            <h3>Ceremonia Humanistyczna</h3>
+            <p>Dom przyjęć Anna</p>
+            <p class="timeline-address">Raciborska 95, 44-350 Gorzyczki</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <mat-icon>restaurant</mat-icon>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-time">16:00</span>
+            <h3>Obiad Weselny</h3>
+            <p>Zapraszamy do stołu</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <mat-icon>cake</mat-icon>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-time">21:00</span>
+            <h3>Tort & Pierwszy Taniec</h3>
+            <p>Zapraszamy na wspólne świętowanie</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <mat-icon>nightlife</mat-icon>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-time">22:00</span>
+            <h3>Zabawa do białego rana</h3>
+            <p>Muzyka, taniec i dobra zabawa!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seating Chart Section -->
+  <section class="seating-section">
+    <div class="section-content">
+      <h2>Rozmieszczenie Gości</h2>
+      <p class="seating-subtitle">Znajdź swoje miejsce przy stole</p>
+
+      @if (guestTable()) {
+      <div class="your-table-info">
+        <mat-icon>chair</mat-icon>
+        <span
+          >Twoje miejsce: <strong>{{ guestTable()?.table_name }}</strong></span
+        >
+      </div>
+      }
+
+      <div class="venue-map">
+        <div class="venue-container">
+          <!-- Wejście -->
+          <div class="venue-entrance">
+            <mat-icon>door_front</mat-icon>
+            <span>Wejście</span>
+          </div>
+
+          <!-- Parkiet -->
+          <div class="dance-floor">
+            <span>Parkiet</span>
+          </div>
+
+          <!-- Stoły gości - góra (1-3) -->
+          @for (table of getTablesRange(1, 3); track table.table_number) {
+          <div
+            class="table guest-table"
+            [class.highlight]="guestTable()?.id === table.id"
+            [style.top.%]="getTablePosition(table.table_number).top"
+            [style.right.%]="getTablePosition(table.table_number).right"
+          >
+            <div class="table-number">{{ table.table_number }}</div>
+            <span class="table-label">{{ table.table_name }}</span>
+          </div>
+          }
+
+          <!-- Stół Państwa Młodych -->
+          @if (getBrideGroomTable(); as brideGroomTable) {
+          <div
+            class="table bride-groom-table"
+            [class.highlight]="guestTable()?.id === brideGroomTable.id"
+            [style.top.%]="getTablePosition(brideGroomTable.table_number).top"
+            [style.right.%]="getTablePosition(brideGroomTable.table_number).right"
+          >
+            <div class="table-icon">
+              <mat-icon>favorite</mat-icon>
+            </div>
+            <span class="table-label">{{ brideGroomTable.table_name }}</span>
+          </div>
+          }
+
+          <!-- Stoły gości - dół (4-7) -->
+          @for (table of getTablesRange(4, 7); track table.table_number) {
+          <div
+            class="table guest-table"
+            [class.highlight]="guestTable()?.id === table.id"
+            [style.top.%]="getTablePosition(table.table_number).top"
+            [style.right.%]="getTablePosition(table.table_number).right"
+          >
+            <div class="table-number">{{ table.table_number }}</div>
+            <span class="table-label">{{ table.table_name }}</span>
+          </div>
+          }
+        </div>
+
+        <div class="map-legend">
+          <div class="legend-item">
+            <div class="legend-dot bride-groom"></div>
+            <span>Państwo Młodzi</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot guest"></div>
+            <span>Stoły gości</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot highlight"></div>
+            <span>Twój stół</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section -->
+  <section class="location-section">
+    <div class="section-content">
+      <h2>Lokalizacja</h2>
+      <div class="location-single">
+        <div class="location-card">
+          <div class="location-icon">
+            <mat-icon>celebration</mat-icon>
+          </div>
+          <h3>Ceremonia & Wesele</h3>
+          <p class="location-name">Dom przyjęć Anna</p>
+          <p class="location-address">Raciborska 95<br />44-350 Gorzyczki</p>
+          <a mat-stroked-button href="https://maps.app.goo.gl/XzV5dYYFDy3uxVzkN" target="_blank">
+            <mat-icon>map</mat-icon>
+            Zobacz mapę
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP Section -->
+  <section class="rsvp-section">
+    <div class="section-content">
+      <h2>Potwierdź obecność</h2>
+      <p class="rsvp-subtitle">Prosimy o odpowiedź do 1 czerwca 2026</p>
+
+      <form [formGroup]="rsvpForm" (ngSubmit)="onSubmitRSVP()" class="rsvp-form">
+        <div class="attendance-choice">
+          <button
+            type="button"
+            class="choice-btn"
+            [class.active]="rsvpForm.value.attending === true"
+            (click)="rsvpForm.patchValue({ attending: true })"
+          >
+            <mat-icon>check_circle</mat-icon>
+            <span>Z radością przybędę</span>
+          </button>
+          <button
+            type="button"
+            class="choice-btn decline"
+            [class.active]="rsvpForm.value.attending === false"
+            (click)="rsvpForm.patchValue({ attending: false })"
+          >
+            <mat-icon>cancel</mat-icon>
+            <span>Niestety nie mogę</span>
+          </button>
+        </div>
+
+        @if (rsvpForm.value.attending) {
+        <div class="rsvp-details">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Liczba osób</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="guestsCount"
+                min="1"
+                [disabled]="loading()"
+              />
+              <mat-icon matPrefix>people</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row checkbox-row">
+            <mat-checkbox formControlName="needsAccommodation" [disabled]="loading()">
+              <mat-icon>hotel</mat-icon>
+              Potrzebuję noclegu
+            </mat-checkbox>
+          </div>
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Wymagania dietetyczne</mat-label>
@@ -55,9 +275,10 @@
               matInput
               formControlName="dietaryRestrictions"
               rows="2"
-              placeholder="np. wegetariańska, bezglutenowa"
+              placeholder="np. wegetariańska, bezglutenowa, alergie..."
               [disabled]="loading()"
             ></textarea>
+            <mat-icon matPrefix>restaurant_menu</mat-icon>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
@@ -66,45 +287,68 @@
               matInput
               formControlName="message"
               rows="3"
-              placeholder="Twoje życzenia..."
+              placeholder="Twoje życzenia lub uwagi..."
               [disabled]="loading()"
             ></textarea>
+            <mat-icon matPrefix>favorite</mat-icon>
           </mat-form-field>
-          }
-
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="rsvpForm.invalid || loading()"
-            class="submit-button"
-          >
-            {{ rsvpSubmitted() ? 'Zaktualizuj odpowiedź' : 'Wyślij odpowiedź' }}
-          </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Najczęściej zadawane pytania (FAQ)</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        @if (faqs().length === 0) {
-        <p>Brak pytań w tej chwili. Sprawdź później!</p>
-        } @else {
-        <mat-accordion>
-          @for (faq of faqs(); track faq.id) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>{{ faq.question }}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>{{ faq.answer }}</p>
-          </mat-expansion-panel>
-          }
-        </mat-accordion>
+        </div>
         }
-      </mat-card-content>
-    </mat-card>
-  </div>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="submit-btn"
+          [disabled]="rsvpForm.invalid || loading()"
+        >
+          @if (loading()) {
+          <mat-icon class="spinning">sync</mat-icon>
+          Wysyłanie... } @else {
+          <mat-icon>send</mat-icon>
+          {{ rsvpSubmitted() ? 'Zaktualizuj odpowiedź' : 'Wyślij odpowiedź' }}
+          }
+        </button>
+
+        @if (rsvpSubmitted()) {
+        <p class="rsvp-confirmed">
+          <mat-icon>check_circle</mat-icon>
+          Twoja odpowiedź została zapisana
+        </p>
+        }
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="section-content">
+      <h2>Często zadawane pytania</h2>
+      @if (faqs().length === 0) {
+      <p class="no-faqs">Brak pytań w tej chwili.</p>
+      } @else {
+      <div class="faq-list">
+        @for (faq of faqs(); track faq.id) {
+        <mat-expansion-panel class="faq-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>help_outline</mat-icon>
+              {{ faq.question }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{ faq.answer }}</p>
+        </mat-expansion-panel>
+        }
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-names">B & M</div>
+      <div class="footer-date">2 Sierpnia 2026</div>
+      <div class="footer-hearts">&#10084; &#10084; &#10084;</div>
+    </div>
+  </footer>
 </div>

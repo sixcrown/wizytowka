@@ -21,6 +21,28 @@ export interface FAQItem {
   order: number;
 }
 
+export interface WeddingTable {
+  id: string;
+  table_number: number;
+  table_name: string;
+  capacity: number;
+  position_x: number;
+  position_y: number;
+  is_bride_groom: boolean;
+}
+
+export interface TableAssignment {
+  table_id: string;
+  table_number: number;
+  table_name: string;
+  capacity: number;
+  position_x: number;
+  position_y: number;
+  is_bride_groom: boolean;
+  guest_id: string | null;
+  guest_name: string | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -82,5 +104,37 @@ export class WeddingService {
 
     if (error) throw error;
     return data as FAQItem;
+  }
+
+  // Table Methods
+  async getTables() {
+    const { data, error } = await this.supabase
+      .from('wedding_tables')
+      .select('*')
+      .order('table_number', { ascending: true });
+
+    if (error) throw error;
+    return data as WeddingTable[];
+  }
+
+  async getTableAssignments() {
+    const { data, error } = await this.supabase
+      .from('table_assignments')
+      .select('*');
+
+    if (error) throw error;
+    return data as TableAssignment[];
+  }
+
+  async getGuestTable(guestId: string): Promise<WeddingTable | null> {
+    const { data, error } = await this.supabase
+      .from('guests')
+      .select('table_id, wedding_tables(*)')
+      .eq('id', guestId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') throw error;
+    // wedding_tables returns as object when using foreign key relation with .single()
+    return (data?.wedding_tables as unknown as WeddingTable) ?? null;
   }
 }
