@@ -1,6 +1,4 @@
-$cream: #faf9f6;
-$charcoal: #2c2c2c;
-$font-sans: 'Lato', 'Segoe UI', sans-serif;
+@use './variables' as *;
 
 .wedding-invitation {
   min-height: 100vh;

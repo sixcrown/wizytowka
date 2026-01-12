@@ -1,6 +1,10 @@
 <section class="faq-section">
   <div class="section-content">
-    <h2>Często zadawane pytania</h2>
+    <div class="section-header">
+      <span class="section-label">Pytania</span>
+      <h2>Najczęściej Zadawane</h2>
+    </div>
+
     @if (faqs().length === 0) {
     <p class="no-faqs">Brak pytań w tej chwili.</p>
     } @else {
@@ -9,7 +13,6 @@
       <mat-expansion-panel class="faq-panel">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>help_outline</mat-icon>
             {{ faq.question }}
           </mat-panel-title>
         </mat-expansion-panel-header>

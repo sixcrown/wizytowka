@@ -1,15 +1,88 @@
 <nav class="nav-bar">
-  <a routerLink="/" class="nav-link">
-    <mat-icon>home</mat-icon>
+  <!-- Hamburger button (mobile) -->
+  <button
+    class="nav-hamburger"
+    [class.hidden]="mobileMenuOpen()"
+    (click)="toggleMobileMenu()"
+    aria-label="Menu"
+  >
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <!-- Logo (centered) -->
+  <a routerLink="/slub" class="nav-logo" (click)="closeMobileMenu()">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </div>
+    <span class="logo-text">B&M</span>
   </a>
-  <span class="nav-title">B & M</span>
-  <div class="nav-actions">
-    <a routerLink="/slub/galeria" class="nav-link gallery-link" title="Galeria zdjęć">
-      <mat-icon>photo_camera</mat-icon>
-      <span>Galeria</span>
-    </a>
-    <button class="nav-link" (click)="onLogout()" title="Wyloguj">
-      <mat-icon>logout</mat-icon>
-    </button>
+
+  <!-- Desktop navigation -->
+  <div class="nav-links">
+    <a routerLink="/slub/harmonogram" routerLinkActive="active">Harmonogram</a>
+    <a routerLink="/slub/lokalizacja" routerLinkActive="active">Lokalizacja</a>
+    <a routerLink="/slub/stolik" routerLinkActive="active">Stolik</a>
+    <a routerLink="/slub/galeria" routerLinkActive="active">Galeria</a>
+    <a routerLink="/slub/faq" routerLinkActive="active">FAQ</a>
+  </div>
+
+  <!-- CTA button (desktop) -->
+  <a routerLink="/slub/rsvp" class="nav-cta">
+    Potwierdź
+  </a>
+
+  <!-- Mobile menu overlay -->
+  <div class="mobile-menu-overlay" [class.open]="mobileMenuOpen()" (click)="closeMobileMenu()"></div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" [class.open]="mobileMenuOpen()">
+    <div class="mobile-menu-header">
+      <span class="mobile-menu-title">Menu</span>
+      <button class="mobile-menu-close" (click)="closeMobileMenu()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="mobile-menu-links">
+      <a routerLink="/slub" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+        <mat-icon>home</mat-icon>
+        Strona główna
+      </a>
+      <a routerLink="/slub/harmonogram" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>schedule</mat-icon>
+        Harmonogram
+      </a>
+      <a routerLink="/slub/lokalizacja" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>place</mat-icon>
+        Lokalizacja
+      </a>
+      <a routerLink="/slub/stolik" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>chair</mat-icon>
+        Twój stolik
+      </a>
+      <a routerLink="/slub/rsvp" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>mail</mat-icon>
+        Potwierdź obecność
+      </a>
+      <a routerLink="/slub/galeria" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>photo_camera</mat-icon>
+        Galeria
+      </a>
+      <a routerLink="/slub/faq" routerLinkActive="active" (click)="closeMobileMenu()">
+        <mat-icon>help</mat-icon>
+        FAQ
+      </a>
+    </div>
+
+    <div class="mobile-menu-footer">
+      <button class="mobile-logout" (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        Wyloguj się
+      </button>
+    </div>
   </div>
 </nav>

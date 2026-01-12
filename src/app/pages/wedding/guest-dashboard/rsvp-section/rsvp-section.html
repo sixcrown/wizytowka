@@ -1,6 +1,10 @@
 <section class="rsvp-section">
   <div class="section-content">
-    <h2>Potwierdź obecność</h2>
+    <div class="section-header">
+      <span class="section-label">Potwierdzenie</span>
+      <h2>Potwierdź Obecność</h2>
+    </div>
+
     <p class="rsvp-subtitle">Prosimy o odpowiedź do 1 czerwca 2026</p>
 
     <form [formGroup]="rsvpForm()" (ngSubmit)="onSubmit()" class="rsvp-form">
@@ -75,14 +79,14 @@
       }
 
       <button
-        mat-flat-button
         type="submit"
         class="submit-btn"
         [disabled]="rsvpForm().invalid || loading()"
       >
         @if (loading()) {
         <mat-icon class="spinning">sync</mat-icon>
-        Wysyłanie... } @else {
+        Wysyłanie...
+        } @else {
         <mat-icon>send</mat-icon>
         {{ rsvpSubmitted() ? 'Zaktualizuj odpowiedź' : 'Wyślij odpowiedź' }}
         }

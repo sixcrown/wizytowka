@@ -7,6 +7,8 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth';
 import { WeddingService, WeddingPhoto } from '../../../services/wedding';
 import { LoginComponent } from '../login/login';
+import { NavBarComponent } from '../guest-dashboard/nav-bar/nav-bar';
+import { WeddingFooterComponent } from '../guest-dashboard/wedding-footer/wedding-footer';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -17,6 +19,8 @@ import { LoginComponent } from '../login/login';
     MatProgressSpinnerModule,
     RouterLink,
     LoginComponent,
+    NavBarComponent,
+    WeddingFooterComponent,
   ],
   templateUrl: './photo-gallery.html',
   styleUrl: './photo-gallery.scss',
@@ -178,5 +182,9 @@ export class PhotoGalleryComponent implements OnInit {
     }
 
     this.lightboxPhoto.set(this.photos()[newIndex]);
+  }
+
+  async logout() {
+    await this.authService.signOut();
   }
 }

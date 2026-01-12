@@ -1,47 +1,38 @@
-$gold: #d4af37;
-$charcoal: #2c2c2c;
-$charcoal-light: #4a4a4a;
-$sage: #9caf88;
-$blush: #f5e6e8;
-$font-serif: 'Playfair Display', 'Georgia', serif;
+@use '../variables' as *;
 
 .rsvp-section {
-  padding: 5rem 2rem;
-  background: $blush;
+  padding: 6rem 2rem;
+  background: $cream;
 
   .section-content {
     max-width: 900px;
     margin: 0 auto;
   }
 
-  h2 {
-    font-family: $font-serif;
-    font-size: 2.5rem;
-    font-weight: 400;
-    text-align: center;
-    color: $charcoal;
-    margin: 0 0 2rem;
-    position: relative;
+  .section-header {
+    margin-bottom: 1rem;
 
-    &::after {
-      content: '';
+    .section-label {
+      @include section-label;
       display: block;
-      width: 60px;
-      height: 2px;
-      background: $gold;
-      margin: 1rem auto 0;
+    }
+
+    h2 {
+      @include section-heading;
     }
   }
 
   .rsvp-subtitle {
-    text-align: center;
-    color: $charcoal-light;
-    margin-bottom: 2rem;
+    font-family: $font-sans;
+    color: $gray;
+    margin: 0 0 2.5rem;
+    padding-left: 1rem;
+    font-size: 0.9375rem;
   }
 
   .rsvp-form {
     max-width: 600px;
-    margin: 0 auto;
+    padding-left: 1rem;
   }
 
   .attendance-choice {
@@ -54,9 +45,8 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
       flex: 1;
       min-width: 200px;
       padding: 1.5rem;
-      border: 2px solid rgba($charcoal, 0.2);
-      border-radius: 12px;
-      background: white;
+      border: 1px solid rgba($charcoal, 0.15);
+      background: $white;
       cursor: pointer;
       transition: all 0.3s;
       display: flex;
@@ -68,21 +58,22 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
         font-size: 32px;
         width: 32px;
         height: 32px;
-        color: $charcoal-light;
+        color: $gray;
       }
 
       span {
-        font-size: 1rem;
+        font-family: $font-sans;
+        font-size: 0.9375rem;
         color: $charcoal;
       }
 
       &:hover {
-        border-color: $gold;
+        border-color: $primary;
       }
 
       &.active {
         border-color: $sage;
-        background: rgba($sage, 0.1);
+        background: rgba($sage, 0.08);
 
         mat-icon {
           color: $sage;
@@ -90,19 +81,18 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
       }
 
       &.decline.active {
-        border-color: #d4a5a5;
-        background: rgba(#d4a5a5, 0.1);
+        border-color: #c88;
+        background: rgba(#c88, 0.08);
 
         mat-icon {
-          color: #b88;
+          color: #b77;
         }
       }
     }
   }
 
   .rsvp-details {
-    background: white;
-    border-radius: 12px;
+    background: $white;
     padding: 2rem;
     margin-bottom: 1.5rem;
 
@@ -114,7 +104,7 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
       mat-icon {
         margin-right: 8px;
         vertical-align: middle;
-        color: $charcoal-light;
+        color: $gray;
       }
     }
 
@@ -128,19 +118,21 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
   }
 
   .submit-btn {
+    @include primary-button;
     width: 100%;
+    justify-content: center;
     padding: 1rem 2rem;
-    background: $gold !important;
-    color: white !important;
-    font-size: 1rem;
-    border-radius: 8px;
+    font-size: 0.9375rem;
 
     mat-icon {
-      margin-right: 8px;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
     }
 
     &:disabled {
       opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .spinning {
@@ -164,10 +156,29 @@ $font-serif: 'Playfair Display', 'Georgia', serif;
     gap: 0.5rem;
     margin-top: 1rem;
     color: $sage;
+    font-family: $font-sans;
     font-weight: 500;
 
     mat-icon {
       color: $sage;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .rsvp-section {
+    padding: 4rem 1.5rem;
+
+    .attendance-choice {
+      flex-direction: column;
+
+      .choice-btn {
+        min-width: auto;
+      }
+    }
+
+    .rsvp-details {
+      padding: 1.5rem;
     }
   }
 }

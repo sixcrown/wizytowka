@@ -5,22 +5,5 @@
 
   <app-welcome-section [guestName]="authService.currentGuest()?.full_name || 'Gościu'" />
 
-  <app-timeline-section />
-
-  <app-seating-section [tables]="tables()" [guestTable]="guestTable()" />
-
-  <app-location-section />
-
-  <app-rsvp-section
-    [rsvpForm]="rsvpForm"
-    [loading]="loading()"
-    [rsvpSubmitted]="rsvpSubmitted()"
-    (submitRsvp)="onSubmitRSVP()"
-  />
-
-  <app-gallery-promo-section />
-
-  <app-faq-section [faqs]="faqs()" />
-
   <app-wedding-footer />
 </div>

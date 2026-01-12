@@ -1,8 +1,4 @@
-$gold: #d4af37;
-$ivory: #fffff0;
-$charcoal: #2c2c2c;
-$font-serif: 'Playfair Display', 'Georgia', serif;
-$font-sans: 'Lato', 'Segoe UI', sans-serif;
+@use '../variables' as *;
 
 .hero-section {
   min-height: 100vh;
@@ -11,132 +7,226 @@ $font-sans: 'Lato', 'Segoe UI', sans-serif;
   justify-content: center;
   align-items: center;
   position: relative;
-  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 10%) 100%);
   text-align: center;
-  padding: 2rem;
+  padding: 6rem 2rem 2rem;
 
-  .hero-overlay {
+  .hero-background {
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba($charcoal, 0.4) 0%,
+        rgba($charcoal, 0.5) 50%,
+        rgba($charcoal, 0.6) 100%
+      );
+    }
   }
 
   .hero-content {
     position: relative;
     z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
-  .save-the-date {
-    display: block;
-    font-family: $font-sans;
-    font-size: 0.875rem;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: $gold;
-    margin-bottom: 1rem;
+  .hero-badge {
+    margin-bottom: 1.5rem;
+
+    span {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: rgba($primary, 0.9);
+      color: $white;
+      font-family: $font-sans;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
   }
 
   .couple-names {
     font-family: $font-serif;
-    font-size: clamp(3rem, 10vw, 6rem);
+    font-size: clamp(3rem, 12vw, 7rem);
     font-weight: 400;
-    color: $ivory;
-    margin: 0 0 0.5rem;
-    line-height: 1.1;
+    color: $white;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   }
 
-  .wedding-date {
-    font-family: $font-serif;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    color: rgba($ivory, 0.8);
-    margin: 0 0 3rem;
-    letter-spacing: 2px;
-  }
-
-  .countdown {
+  .wedding-date-wrapper {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0 1rem;
+
+    .date-line {
+      width: 60px;
+      height: 1px;
+      background: rgba($white, 0.5);
+    }
+
+    .wedding-date {
+      font-family: $font-serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      color: $white;
+      margin: 0;
+      letter-spacing: 3px;
+    }
+  }
+
+  .wedding-venue {
+    font-family: $font-sans;
+    font-size: 0.9rem;
+    color: rgba($white, 0.8);
+    margin: 0 0 2.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: $primary;
+    color: $white;
+    font-family: $font-sans;
+    font-size: 0.9375rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s;
+
+    &:hover {
+      background: $primary-dark;
+      transform: translateY(-2px);
+    }
+  }
+
+  .hero-countdown {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: rgba($white, 0.98);
+    padding: 1.5rem 2rem;
+
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
     .countdown-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 80px;
-      padding: 1rem;
-      background: rgba($gold, 0.1);
-      border: 1px solid rgba($gold, 0.3);
-      border-radius: 8px;
+      padding: 0 1.5rem;
 
       .countdown-value {
         font-family: $font-serif;
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: $gold;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 400;
+        color: $primary;
         line-height: 1;
       }
 
       .countdown-label {
-        font-size: 0.75rem;
+        font-family: $font-sans;
+        font-size: 0.6875rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-        color: rgba($ivory, 0.7);
+        color: $gray;
         margin-top: 0.5rem;
       }
     }
 
-    .countdown-separator {
-      font-family: $font-serif;
-      font-size: 2rem;
-      color: $gold;
-      align-self: center;
-      opacity: 0.5;
+    .countdown-divider {
+      width: 1px;
+      height: 50px;
+      background: rgba($charcoal, 0.15);
     }
   }
 
-  .scroll-hint {
+  .scroll-indicator {
     position: absolute;
-    bottom: 2rem;
+    bottom: 120px;
     left: 50%;
     transform: translateX(-50%);
-    color: $gold;
-    animation: bounce 2s infinite;
-    opacity: 0.7;
+    z-index: 1;
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba($white, 0.8), transparent);
+      animation: scrollPulse 2s infinite;
+    }
   }
 
-  @keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateX(-50%) translateY(0);
+  @keyframes scrollPulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scaleY(1);
     }
-    40% {
-      transform: translateX(-50%) translateY(-10px);
-    }
-    60% {
-      transform: translateX(-50%) translateY(-5px);
+    50% {
+      opacity: 1;
+      transform: scaleY(1.2);
     }
   }
 }
 
 @media (max-width: 768px) {
   .hero-section {
-    .countdown {
+    .hero-background {
+      background-attachment: scroll;
+    }
+
+    .wedding-date-wrapper {
+      .date-line {
+        width: 30px;
+      }
+    }
+
+    .hero-countdown {
+      padding: 1rem;
+
+      .countdown-container {
+        gap: 0;
+      }
+
       .countdown-item {
-        min-width: 65px;
-        padding: 0.75rem;
+        padding: 0 0.75rem;
 
         .countdown-value {
           font-size: 1.75rem;
         }
+
+        .countdown-label {
+          font-size: 0.5625rem;
+          letter-spacing: 1px;
+        }
       }
 
-      .countdown-separator {
-        display: none;
+      .countdown-divider {
+        height: 40px;
       }
+    }
+
+    .scroll-indicator {
+      bottom: 100px;
     }
   }
 }

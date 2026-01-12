@@ -1,33 +1,53 @@
 <section class="hero-section">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="save-the-date">Save the Date</span>
-    <h1 class="couple-names">Bartosz & Marta</h1>
-    <p class="wedding-date">2 Sierpnia 2026</p>
+  <div class="hero-background">
+    <div class="hero-overlay"></div>
+  </div>
 
-    <div class="countdown">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>Save the Date</span>
+    </div>
+
+    <h1 class="couple-names">Bartosz & Marta</h1>
+
+    <div class="wedding-date-wrapper">
+      <span class="date-line"></span>
+      <p class="wedding-date">2 Sierpnia 2026</p>
+      <span class="date-line"></span>
+    </div>
+
+    <p class="wedding-venue">Dom przyjęć Anna, Gorzyczki</p>
+
+    <a routerLink="/slub/rsvp" class="hero-cta">
+      Potwierdź obecność
+    </a>
+  </div>
+
+  <div class="hero-countdown">
+    <div class="countdown-container">
       <div class="countdown-item">
         <span class="countdown-value">{{ countdown().days }}</span>
         <span class="countdown-label">dni</span>
       </div>
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider"></div>
       <div class="countdown-item">
         <span class="countdown-value">{{ countdown().hours }}</span>
         <span class="countdown-label">godzin</span>
       </div>
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider"></div>
       <div class="countdown-item">
         <span class="countdown-value">{{ countdown().minutes }}</span>
         <span class="countdown-label">minut</span>
       </div>
-      <div class="countdown-separator">:</div>
+      <div class="countdown-divider"></div>
       <div class="countdown-item">
         <span class="countdown-value">{{ countdown().seconds }}</span>
         <span class="countdown-label">sekund</span>
       </div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <mat-icon>expand_more</mat-icon>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
   </div>
 </section>

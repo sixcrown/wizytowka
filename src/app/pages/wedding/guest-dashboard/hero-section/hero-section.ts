@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 export interface CountdownTime {
   days: number;
@@ -10,7 +10,7 @@ export interface CountdownTime {
 
 @Component({
   selector: 'app-hero-section',
-  imports: [MatIconModule],
+  imports: [RouterLink],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.scss',
 })
