@@ -1,0 +1,80 @@
+$gold: #d4af37;
+$ivory: #fffff0;
+$charcoal: #2c2c2c;
+$font-serif: 'Playfair Display', 'Georgia', serif;
+
+.gallery-promo-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 8%) 100%);
+
+  .section-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .gallery-promo {
+    text-align: center;
+    padding: 2rem 0;
+
+    .gallery-promo-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba($gold, 0.15);
+      border: 2px solid rgba($gold, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+
+      mat-icon {
+        font-size: 36px;
+        width: 36px;
+        height: 36px;
+        color: $gold;
+      }
+    }
+
+    h2 {
+      font-family: $font-serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      text-align: center;
+      color: $ivory;
+      margin: 0 0 1rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 2px;
+        background: $gold;
+        margin: 1rem auto 0;
+      }
+    }
+
+    .gallery-promo-text {
+      color: rgba($ivory, 0.8);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-promo-btn {
+      background: $gold !important;
+      color: $charcoal !important;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background: lighten($gold, 5%) !important;
+      }
+    }
+  }
+}

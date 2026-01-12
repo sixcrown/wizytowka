@@ -1,41 +1,33 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth';
-import { WeddingService, RSVPResponse, FAQItem, WeddingTable, WeddingPhoto } from '../../../services/wedding';
-
-interface CountdownTime {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
+import { WeddingService, RSVPResponse, FAQItem, WeddingTable } from '../../../services/wedding';
+import { NavBarComponent } from './nav-bar/nav-bar';
+import { HeroSectionComponent, CountdownTime } from './hero-section/hero-section';
+import { WelcomeSectionComponent } from './welcome-section/welcome-section';
+import { TimelineSectionComponent } from './timeline-section/timeline-section';
+import { SeatingSectionComponent } from './seating-section/seating-section';
+import { LocationSectionComponent } from './location-section/location-section';
+import { RsvpSectionComponent } from './rsvp-section/rsvp-section';
+import { GalleryPromoSectionComponent } from './gallery-promo-section/gallery-promo-section';
+import { FaqSectionComponent } from './faq-section/faq-section';
+import { WeddingFooterComponent } from './wedding-footer/wedding-footer';
 
 @Component({
   selector: 'app-guest-dashboard',
   imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatToolbarModule,
-    MatIconModule,
     MatSnackBarModule,
+    NavBarComponent,
+    HeroSectionComponent,
+    WelcomeSectionComponent,
+    TimelineSectionComponent,
+    SeatingSectionComponent,
+    LocationSectionComponent,
+    RsvpSectionComponent,
+    GalleryPromoSectionComponent,
+    FaqSectionComponent,
+    WeddingFooterComponent,
   ],
   templateUrl: './guest-dashboard.html',
   styleUrl: './guest-dashboard.scss',
@@ -186,27 +178,5 @@ export class GuestDashboardComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Error loading guest table:', error);
     }
-  }
-
-  getTablesRange(start: number, end: number): WeddingTable[] {
-    return this.tables().filter((t) => t.table_number >= start && t.table_number <= end);
-  }
-
-  getTablePosition(tableNumber: number): { top: number; right: number } {
-    const positions: Record<number, { top: number; right: number }> = {
-      0: { top: 49, right: 1.5 }, // Państwo Młodzi - między stołem 3 a 4
-      1: { top: 3, right: 3 },
-      2: { top: 18, right: 3 },
-      3: { top: 33, right: 3 },
-      4: { top: 64, right: 3 },
-      5: { top: 79, right: 3 },
-      6: { top: 79, right: 12 },
-      7: { top: 79, right: 21 },
-    };
-    return positions[tableNumber] || { top: 50, right: 50 };
-  }
-
-  getBrideGroomTable(): WeddingTable | undefined {
-    return this.tables().find((t) => t.is_bride_groom);
   }
 }

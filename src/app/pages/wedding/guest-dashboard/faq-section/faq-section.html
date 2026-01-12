@@ -1,0 +1,22 @@
+<section class="faq-section">
+  <div class="section-content">
+    <h2>Często zadawane pytania</h2>
+    @if (faqs().length === 0) {
+    <p class="no-faqs">Brak pytań w tej chwili.</p>
+    } @else {
+    <div class="faq-list">
+      @for (faq of faqs(); track faq.id) {
+      <mat-expansion-panel class="faq-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>help_outline</mat-icon>
+            {{ faq.question }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ faq.answer }}</p>
+      </mat-expansion-panel>
+      }
+    </div>
+    }
+  </div>
+</section>

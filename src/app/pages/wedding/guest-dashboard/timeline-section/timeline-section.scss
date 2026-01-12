@@ -1,0 +1,144 @@
+$gold: #d4af37;
+$cream: #faf9f6;
+$charcoal: #2c2c2c;
+$charcoal-light: #4a4a4a;
+$font-serif: 'Playfair Display', 'Georgia', serif;
+
+.timeline-section {
+  padding: 5rem 2rem;
+  background: $cream;
+
+  .section-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-family: $font-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+    color: $charcoal;
+    margin: 0 0 2rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: $gold;
+      margin: 1rem auto 0;
+    }
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, $gold, rgba($gold, 0.2));
+    }
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-icon {
+      position: absolute;
+      left: -2rem;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      background: $gold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid $cream;
+
+      mat-icon {
+        color: white;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .timeline-content {
+      padding-left: 1.5rem;
+
+      .timeline-time {
+        display: inline-block;
+        font-family: $font-serif;
+        font-size: 1rem;
+        color: $gold;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      h3 {
+        font-family: $font-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $charcoal;
+        margin: 0 0 0.5rem;
+      }
+
+      p {
+        margin: 0;
+        color: $charcoal-light;
+        line-height: 1.5;
+      }
+
+      .timeline-address {
+        font-size: 0.875rem;
+        color: lighten($charcoal-light, 10%);
+        font-style: italic;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-section {
+    .timeline {
+      padding-left: 1.5rem;
+
+      &::before {
+        left: 0;
+      }
+    }
+
+    .timeline-item {
+      .timeline-icon {
+        left: -1.5rem;
+        width: 36px;
+        height: 36px;
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .timeline-content {
+        padding-left: 1rem;
+      }
+    }
+  }
+}

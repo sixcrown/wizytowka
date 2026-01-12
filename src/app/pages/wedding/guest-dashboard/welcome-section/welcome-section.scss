@@ -1,0 +1,56 @@
+$gold: #d4af37;
+$ivory: #fffff0;
+$charcoal: #2c2c2c;
+$charcoal-light: #4a4a4a;
+$font-serif: 'Playfair Display', 'Georgia', serif;
+
+.welcome-section {
+  padding: 5rem 2rem;
+  background: $ivory;
+  text-align: center;
+
+  .section-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-family: $font-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+    color: $charcoal;
+    margin: 0 0 2rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: $gold;
+      margin: 1rem auto 0;
+    }
+  }
+
+  .ornament {
+    color: $gold;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .welcome-name {
+    font-family: $font-serif;
+    font-size: 1.75rem;
+    color: $gold;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .welcome-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: $charcoal-light;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

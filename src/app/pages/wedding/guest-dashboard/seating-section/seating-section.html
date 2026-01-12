@@ -1,0 +1,86 @@
+<section class="seating-section">
+  <div class="section-content">
+    <h2>Rozmieszczenie Gości</h2>
+    <p class="seating-subtitle">Znajdź swoje miejsce przy stole</p>
+
+    @if (guestTable()) {
+    <div class="your-table-info">
+      <mat-icon>chair</mat-icon>
+      <span
+        >Twoje miejsce: <strong>{{ guestTable()?.table_name }}</strong></span
+      >
+    </div>
+    }
+
+    <div class="venue-map">
+      <div class="venue-container">
+        <!-- Wejście -->
+        <div class="venue-entrance">
+          <mat-icon>door_front</mat-icon>
+          <span>Wejście</span>
+        </div>
+
+        <!-- Parkiet -->
+        <div class="dance-floor">
+          <span>Parkiet</span>
+        </div>
+
+        <!-- Stoły gości - góra (1-3) -->
+        @for (table of getTablesRange(1, 3); track table.table_number) {
+        <div
+          class="table guest-table"
+          [class.highlight]="guestTable()?.id === table.id"
+          [style.top.%]="getTablePosition(table.table_number).top"
+          [style.right.%]="getTablePosition(table.table_number).right"
+        >
+          <div class="table-number">{{ table.table_number }}</div>
+          <span class="table-label">{{ table.table_name }}</span>
+        </div>
+        }
+
+        <!-- Stół Państwa Młodych -->
+        @if (getBrideGroomTable(); as brideGroomTable) {
+        <div
+          class="table bride-groom-table"
+          [class.highlight]="guestTable()?.id === brideGroomTable.id"
+          [style.top.%]="getTablePosition(brideGroomTable.table_number).top"
+          [style.right.%]="getTablePosition(brideGroomTable.table_number).right"
+        >
+          <div class="table-icon">
+            <mat-icon>favorite</mat-icon>
+          </div>
+          <span class="table-label">{{ brideGroomTable.table_name }}</span>
+        </div>
+        }
+
+        <!-- Stoły gości - dół (4-7) -->
+        @for (table of getTablesRange(4, 7); track table.table_number) {
+        <div
+          class="table guest-table"
+          [class.highlight]="guestTable()?.id === table.id"
+          [style.top.%]="getTablePosition(table.table_number).top"
+          [style.right.%]="getTablePosition(table.table_number).right"
+        >
+          <div class="table-number">{{ table.table_number }}</div>
+          <span class="table-label">{{ table.table_name }}</span>
+        </div>
+        }
+      </div>
+
+      <div class="map-legend">
+        <div class="legend-item">
+          <div class="legend-dot bride-groom"></div>
+          <span>Państwo Młodzi</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot guest"></div>
+          <span>Stoły gości</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot highlight"></div>
+          <span>Twój stół</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

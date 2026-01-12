@@ -1,0 +1,104 @@
+$gold: #d4af37;
+$ivory: #fffff0;
+$charcoal: #2c2c2c;
+$font-serif: 'Playfair Display', 'Georgia', serif;
+
+.location-section {
+  padding: 5rem 2rem;
+  background: $charcoal;
+  color: $ivory;
+
+  .section-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-family: $font-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+    color: $ivory;
+    margin: 0 0 2rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: $gold;
+      margin: 1rem auto 0;
+    }
+  }
+
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .location-single {
+    display: flex;
+    justify-content: center;
+
+    .location-card {
+      max-width: 400px;
+      width: 100%;
+    }
+  }
+
+  .location-card {
+    background: rgba(white, 0.05);
+    border: 1px solid rgba($gold, 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+
+    .location-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba($gold, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+
+      mat-icon {
+        color: $gold;
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    h3 {
+      font-family: $font-serif;
+      font-size: 1.25rem;
+      color: $gold;
+      margin: 0 0 1rem;
+    }
+
+    .location-name {
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+
+    .location-address {
+      font-size: 0.9rem;
+      color: rgba($ivory, 0.7);
+      margin: 0 0 1.5rem;
+      line-height: 1.6;
+    }
+
+    a {
+      border-color: $gold;
+      color: $gold;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<section class="rsvp-section">
+  <div class="section-content">
+    <h2>Potwierdź obecność</h2>
+    <p class="rsvp-subtitle">Prosimy o odpowiedź do 1 czerwca 2026</p>
+
+    <form [formGroup]="rsvpForm()" (ngSubmit)="onSubmit()" class="rsvp-form">
+      <div class="attendance-choice">
+        <button
+          type="button"
+          class="choice-btn"
+          [class.active]="rsvpForm().value.attending === true"
+          (click)="rsvpForm().patchValue({ attending: true })"
+        >
+          <mat-icon>check_circle</mat-icon>
+          <span>Z radością przybędę</span>
+        </button>
+        <button
+          type="button"
+          class="choice-btn decline"
+          [class.active]="rsvpForm().value.attending === false"
+          (click)="rsvpForm().patchValue({ attending: false })"
+        >
+          <mat-icon>cancel</mat-icon>
+          <span>Niestety nie mogę</span>
+        </button>
+      </div>
+
+      @if (rsvpForm().value.attending) {
+      <div class="rsvp-details">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Liczba osób</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="guestsCount"
+              min="1"
+              [disabled]="loading()"
+            />
+            <mat-icon matPrefix>people</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row checkbox-row">
+          <mat-checkbox formControlName="needsAccommodation" [disabled]="loading()">
+            <mat-icon>hotel</mat-icon>
+            Potrzebuję noclegu
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Wymagania dietetyczne</mat-label>
+          <textarea
+            matInput
+            formControlName="dietaryRestrictions"
+            rows="2"
+            placeholder="np. wegetariańska, bezglutenowa, alergie..."
+            [disabled]="loading()"
+          ></textarea>
+          <mat-icon matPrefix>restaurant_menu</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Wiadomość dla Pary Młodej</mat-label>
+          <textarea
+            matInput
+            formControlName="message"
+            rows="3"
+            placeholder="Twoje życzenia lub uwagi..."
+            [disabled]="loading()"
+          ></textarea>
+          <mat-icon matPrefix>favorite</mat-icon>
+        </mat-form-field>
+      </div>
+      }
+
+      <button
+        mat-flat-button
+        type="submit"
+        class="submit-btn"
+        [disabled]="rsvpForm().invalid || loading()"
+      >
+        @if (loading()) {
+        <mat-icon class="spinning">sync</mat-icon>
+        Wysyłanie... } @else {
+        <mat-icon>send</mat-icon>
+        {{ rsvpSubmitted() ? 'Zaktualizuj odpowiedź' : 'Wyślij odpowiedź' }}
+        }
+      </button>
+
+      @if (rsvpSubmitted()) {
+      <p class="rsvp-confirmed">
+        <mat-icon>check_circle</mat-icon>
+        Twoja odpowiedź została zapisana
+      </p>
+      }
+    </form>
+  </div>
+</section>

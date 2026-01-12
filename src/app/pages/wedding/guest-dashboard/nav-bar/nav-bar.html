@@ -1,0 +1,15 @@
+<nav class="nav-bar">
+  <a routerLink="/" class="nav-link">
+    <mat-icon>home</mat-icon>
+  </a>
+  <span class="nav-title">B & M</span>
+  <div class="nav-actions">
+    <a routerLink="/slub/galeria" class="nav-link gallery-link" title="Galeria zdjęć">
+      <mat-icon>photo_camera</mat-icon>
+      <span>Galeria</span>
+    </a>
+    <button class="nav-link" (click)="onLogout()" title="Wyloguj">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</nav>

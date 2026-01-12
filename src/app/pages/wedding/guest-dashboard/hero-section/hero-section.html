@@ -1,0 +1,33 @@
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="save-the-date">Save the Date</span>
+    <h1 class="couple-names">Bartosz & Marta</h1>
+    <p class="wedding-date">2 Sierpnia 2026</p>
+
+    <div class="countdown">
+      <div class="countdown-item">
+        <span class="countdown-value">{{ countdown().days }}</span>
+        <span class="countdown-label">dni</span>
+      </div>
+      <div class="countdown-separator">:</div>
+      <div class="countdown-item">
+        <span class="countdown-value">{{ countdown().hours }}</span>
+        <span class="countdown-label">godzin</span>
+      </div>
+      <div class="countdown-separator">:</div>
+      <div class="countdown-item">
+        <span class="countdown-value">{{ countdown().minutes }}</span>
+        <span class="countdown-label">minut</span>
+      </div>
+      <div class="countdown-separator">:</div>
+      <div class="countdown-item">
+        <span class="countdown-value">{{ countdown().seconds }}</span>
+        <span class="countdown-label">sekund</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <mat-icon>expand_more</mat-icon>
+  </div>
+</section>

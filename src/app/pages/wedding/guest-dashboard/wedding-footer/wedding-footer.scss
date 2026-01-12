@@ -1,0 +1,30 @@
+$gold: #d4af37;
+$ivory: #fffff0;
+$charcoal: #2c2c2c;
+$font-serif: 'Playfair Display', 'Georgia', serif;
+
+.footer {
+  background: $charcoal;
+  padding: 3rem 2rem;
+  text-align: center;
+
+  .footer-content {
+    .footer-names {
+      font-family: $font-serif;
+      font-size: 2rem;
+      color: $gold;
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-date {
+      color: rgba($ivory, 0.7);
+      margin-bottom: 1rem;
+    }
+
+    .footer-hearts {
+      color: $gold;
+      letter-spacing: 8px;
+    }
+  }
+}
